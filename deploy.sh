@@ -8,19 +8,19 @@ then
 elif [ "$1" = "" ]
 then
     echo deploy [Option]
-    echo "       -i 初始化"
-    echo "       message  提交到github并发布，提交信息为mesage"
+    echo '-i init'
+    echo 'message  this is message'
     exit 0
 else
     git add . --all
-    git commit -am "$1"
+    git commit -mmaster
     git pull origin master
     git push origin master
 
     simiki g
     cd output
     git add . --all
-    git commit -am "$1"
+    git commit -m good
     git pull origin gh-pages
     git push origin gh-pages
     cd ..
