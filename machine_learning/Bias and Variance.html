@@ -40,12 +40,32 @@
 <p>对于Bagging算法来说，由于我们会并行地训练很多不同的分类器的目的就是降低这个方差(variance) ,因为采用了相互独立的基分类器多了以后，h的值自然就会靠近。所以对于每个基分类器来说，目标就是如何降低这个偏差（bias),所以我们会采用深度很深甚至不剪枝的决策树。</p>
 <p>对于Boosting来说，每一步我们都会在上一轮的基础上更加拟合原数据，所以可以保证偏差（bias）,所以对于每个基分类器来说，问题就在于如何选择variance更小的分类器，即更简单的分类器，所以我们选择了深度很浅的决策树。</p>
 <p>来源链接：https://www.zhihu.com/question/45487317/answer/99153174</p>
+<div class="hlcode"><pre><span class="c">## use list</span>
+<span class="k">for </span>i in 1 2 3 5 6
+
+sc是spark的入口，通过<span class="sb">`</span>SparkConf<span class="sb">`</span>来创建它。
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="k">val</span> <span class="n">sparkConf</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">SparkConf</span><span class="o">().</span><span class="n">setAppName</span><span class="o">(</span><span class="s">&quot;FromPostgreSql&quot;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">setMaster</span><span class="o">(</span><span class="s">&quot;local[4]&quot;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">set</span><span class="o">(</span><span class="s">&quot;spark.executor.memory&quot;</span><span class="o">,</span> <span class="s">&quot;2g&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">sc</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">SparkCsontext</span><span class="o">(</span><span class="n">sparkConf</span><span class="o">)</span>
+</pre></div>
+
+
+<p>对了，目前spark只支持的scala版本是2.10.x，所以用2.11.x版本可能会出错。</p>
+<p>使用<code>sc.stop()</code>方法停止SparkContext。貌似不执行stop，本地用<code>sbt run</code>运行时会出现错误信息，
+但是提交jar方式运行没问题。
+do
+    echo $i
+done</p>
     </div>
     <div id="footer">
       <span>
         <p>Copyright © 2016 linxunchen.
         Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
-        <p>Site Generated 2016-12-05 00:18:27</p>
+        <p>Site Generated 2016-12-05 00:28:35</p>
       </span>
     </div>
   </body>
