@@ -20,3 +20,23 @@ date: 2016-07-23 12:27:10
 
 
 来源链接：https://www.zhihu.com/question/45487317/answer/99153174
+
+```bash
+## use list
+for i in 1 2 3 5 6
+
+sc是spark的入口，通过`SparkConf`来创建它。
+```
+```scala
+val sparkConf = new SparkConf().setAppName("FromPostgreSql")
+  .setMaster("local[4]")
+  .set("spark.executor.memory", "2g")
+val sc = new SparkCsontext(sparkConf)
+```
+对了，目前spark只支持的scala版本是2.10.x，所以用2.11.x版本可能会出错。
+
+使用`sc.stop()`方法停止SparkContext。貌似不执行stop，本地用`sbt run`运行时会出现错误信息，
+但是提交jar方式运行没问题。
+do
+    echo $i
+done
