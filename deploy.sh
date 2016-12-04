@@ -8,19 +8,19 @@ then
 elif [ "$1" = "" ]
 then
     echo deploy [Option]
-    echo '-i init'
-    echo 'message  this is message'
+    echo "       -i "
+    echo "       this is message"
     exit 0
 else
     git add . --all
-    git commit -mmaster
+    git commit -am "$1"
     git pull origin master
     git push origin master
 
     simiki g
     cd output
     git add . --all
-    git commit -m good
+    git commit -am "$1"
     git pull origin gh-pages
     git push origin gh-pages
     cd ..
