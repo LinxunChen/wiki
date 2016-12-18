@@ -1,0 +1,54 @@
+---
+title: 字符串常见问题
+date: 2016-12-19 00:23:10
+---
+[TOC]
+
+### 字符串在内存的位置(常量池/堆内存)
+基本类型的变量数据和对象的引用都是放在栈里面的，对象本身放在堆里面，显式的String常量放在[常量池](http://blog.csdn.net/olanlanxiari/article/details/8104505)，String对象放在堆中。[[参考](http://www.cnblogs.com/holten/p/5782596.html)]
+- String对象创建时
+```java
+String str1 = "abcd";
+String str2 = new String("abcd");
+System.out.println(str1==str2);//false
+```
+第一种方式是在常量池中拿对象，第二种方式是直接在堆内存空间创建一个新的对象。
+只要使用new方法，便需要创建新的对象。
+- 使用+连接时  
+```java
+String str1 = "str";
+String str2 = "ing";
+
+String str3 = "str" + "ing";
+String str4 = str1 + str2;
+System.out.println(str3 == str4);//false
+
+String str5 = "string";
+System.out.println(str3 == str5);//true
+```
+只有引号包含文本间用"+""连接时，连接产生的新对象才会进入常量池。对于所有包含new方式新建对象（包括null）的“+”连接表达式，它所产生的新对象都不会被加入字符串池中。
+
+### 循环中字符串拼接的技巧
+单单从性能上考虑的话从高到低依次是：StringBuilder --> StringBuffer --> String。[[参考](http://blog.csdn.net/shfqbluestone/article/details/34188325)]
+
+- StringBuilder是线程不安全的
+- StringBuffer是线程安全的，同步带来了性能损耗
+- 字符串拼接：
+```java
+String str = "hello,world!";
+String result = "";
+
+for (int i = 0; i < loopCount; i++) {
+    result += str;
+}
+```
+编译器最终会把上面的代码编译为类似下面的代码：
+```java
+String str = "hello,world!";
+String result = "";
+
+for (int i = 0; i < loopCount; i++) {
+    result = new StringBuilder(result).append(str).toString();
+}
+```
+每次循环都需要创建一个 StringBuilder 对象（**创建对象时需要耗费时间和内存**），随着循环次数的增大， result 字符串就会越来越长，把 result 中的字符复制到新建的 StringBuilder 中花费的时间也就越长，而且StringBuilder(result).append(str).toString() 会创建一个临时的字符串，随着循环次数的增加，这个操作花费的时间也会越来越长。总之，随着循环变量 i 的增大，每次循环会变得越来越慢。
