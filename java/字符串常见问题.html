@@ -37,8 +37,10 @@
 </ul>
 </div>
 <h3 id="_1">字符串在内存的位置(常量池/堆内存)</h3>
-<p>基本类型的变量数据和对象的引用都是放在栈里面的，对象本身放在堆里面，显式的String常量放在<a href="http://blog.csdn.net/olanlanxiari/article/details/8104505">常量池</a>，String对象放在堆中。[<a href="http://www.cnblogs.com/holten/p/5782596.html">参考</a>]
-- String对象创建时</p>
+<p>基本类型的变量数据和对象的引用都是放在栈里面的，对象本身放在堆里面，显式的String常量放在<a href="http://blog.csdn.net/olanlanxiari/article/details/8104505">常量池</a>，String对象放在堆中。[<a href="http://www.cnblogs.com/holten/p/5782596.html">参考</a>]</p>
+<ul>
+<li>String对象创建时</li>
+</ul>
 <div class="hlcode"><pre><span class="n">String</span> <span class="n">str1</span> <span class="o">=</span> <span class="s">&quot;abcd&quot;</span><span class="o">;</span>
 <span class="n">String</span> <span class="n">str2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="s">&quot;abcd&quot;</span><span class="o">);</span>
 <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str1</span><span class="o">==</span><span class="n">str2</span><span class="o">);</span><span class="c1">//false</span>
@@ -46,8 +48,10 @@
 
 
 <p>第一种方式是在常量池中拿对象，第二种方式是直接在堆内存空间创建一个新的对象。
-只要使用new方法，便需要创建新的对象。
-- 使用+连接时  </p>
+只要使用new方法，便需要创建新的对象。</p>
+<ul>
+<li>使用+连接时  </li>
+</ul>
 <div class="hlcode"><pre><span class="n">String</span> <span class="n">str1</span> <span class="o">=</span> <span class="s">&quot;str&quot;</span><span class="o">;</span>
 <span class="n">String</span> <span class="n">str2</span> <span class="o">=</span> <span class="s">&quot;ing&quot;</span><span class="o">;</span>
 
@@ -93,7 +97,7 @@
       <span>
         <p>Copyright © 2016 linxunchen.
         Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
-        <p>Site Generated 2016-12-19 00:25:43</p>
+        <p>Site Generated 2016-12-19 00:28:21</p>
       </span>
     </div>
   </body>
