@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>字符串常见问题 - Wiki World</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="linxunchen's wiki"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/wiki/">Home</a>&nbsp;&#187;&nbsp;<a href="/wiki/#java">java</a>&nbsp;&#187;&nbsp;字符串常见问题
+    <span class="updated">Updated&nbsp;
+      2016-12-19 00:23:10
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">字符串常见问题</div>
+
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">字符串在内存的位置(常量池/堆内存)</a></li>
+<li><a href="#_2">循环中字符串拼接的技巧</a></li>
+</ul>
+</div>
+<h3 id="_1">字符串在内存的位置(常量池/堆内存)</h3>
+<p>基本类型的变量数据和对象的引用都是放在栈里面的，对象本身放在堆里面，显式的String常量放在<a href="http://blog.csdn.net/olanlanxiari/article/details/8104505">常量池</a>，String对象放在堆中。[<a href="http://www.cnblogs.com/holten/p/5782596.html">参考</a>]
+- String对象创建时</p>
+<div class="hlcode"><pre><span class="n">String</span> <span class="n">str1</span> <span class="o">=</span> <span class="s">&quot;abcd&quot;</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">str2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="s">&quot;abcd&quot;</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str1</span><span class="o">==</span><span class="n">str2</span><span class="o">);</span><span class="c1">//false</span>
+</pre></div>
+
+
+<p>第一种方式是在常量池中拿对象，第二种方式是直接在堆内存空间创建一个新的对象。
+只要使用new方法，便需要创建新的对象。
+- 使用+连接时  </p>
+<div class="hlcode"><pre><span class="n">String</span> <span class="n">str1</span> <span class="o">=</span> <span class="s">&quot;str&quot;</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">str2</span> <span class="o">=</span> <span class="s">&quot;ing&quot;</span><span class="o">;</span>
+
+<span class="n">String</span> <span class="n">str3</span> <span class="o">=</span> <span class="s">&quot;str&quot;</span> <span class="o">+</span> <span class="s">&quot;ing&quot;</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">str4</span> <span class="o">=</span> <span class="n">str1</span> <span class="o">+</span> <span class="n">str2</span><span class="o">;</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str3</span> <span class="o">==</span> <span class="n">str4</span><span class="o">);</span><span class="c1">//false</span>
+
+<span class="n">String</span> <span class="n">str5</span> <span class="o">=</span> <span class="s">&quot;string&quot;</span><span class="o">;</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str3</span> <span class="o">==</span> <span class="n">str5</span><span class="o">);</span><span class="c1">//true</span>
+</pre></div>
+
+
+<p>只有引号包含文本间用"+""连接时，连接产生的新对象才会进入常量池。对于所有包含new方式新建对象（包括null）的“+”连接表达式，它所产生的新对象都不会被加入字符串池中。</p>
+<h3 id="_2">循环中字符串拼接的技巧</h3>
+<p>单单从性能上考虑的话从高到低依次是：StringBuilder --&gt; StringBuffer --&gt; String。[<a href="http://blog.csdn.net/shfqbluestone/article/details/34188325">参考</a>]</p>
+<ul>
+<li>StringBuilder是线程不安全的</li>
+<li>StringBuffer是线程安全的，同步带来了性能损耗</li>
+<li>字符串拼接：</li>
+</ul>
+<div class="hlcode"><pre><span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;hello,world!&quot;</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">loopCount</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="n">str</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>编译器最终会把上面的代码编译为类似下面的代码：</p>
+<div class="hlcode"><pre><span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;hello,world!&quot;</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">loopCount</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="n">result</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">str</span><span class="o">).</span><span class="na">toString</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>每次循环都需要创建一个 StringBuilder 对象（<strong>创建对象时需要耗费时间和内存</strong>），随着循环次数的增大， result 字符串就会越来越长，把 result 中的字符复制到新建的 StringBuilder 中花费的时间也就越长，而且StringBuilder(result).append(str).toString() 会创建一个临时的字符串，随着循环次数的增加，这个操作花费的时间也会越来越长。总之，随着循环变量 i 的增大，每次循环会变得越来越慢。</p>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2016 linxunchen.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2016-12-19 00:25:43</p>
+      </span>
+    </div>
+  </body>
+</html>
