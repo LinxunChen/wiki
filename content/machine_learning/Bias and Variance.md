@@ -19,4 +19,8 @@ date: 2016-07-23 12:27:10
 对于Boosting来说，每一步我们都会在上一轮的基础上更加拟合原数据，所以可以保证偏差（bias）,所以对于每个基分类器来说，问题就在于如何选择variance更小的分类器，即更简单的分类器，所以我们选择了深度很浅的决策树。
 
 
-来源链接：https://www.zhihu.com/question/45487317/answer/99153174
+参考：
+```
+1. https://www.zhihu.com/question/45487317/answer/99153174
+2. https://www.zhihu.com/question/27068705
+```
