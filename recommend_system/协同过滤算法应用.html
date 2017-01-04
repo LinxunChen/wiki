@@ -38,15 +38,14 @@
 </ul>
 </li>
 <li><a href="#_2">相似度计算</a><ul>
-<li><a href="#_3">余弦相似度</a></li>
-<li><a href="#_4">皮尔逊系数</a></li>
-<li><a href="#_5">两种计算方式的比较</a></li>
+<li><a href="#_3">皮尔逊系数</a></li>
+<li><a href="#_4">修正的余弦相似度与皮尔逊系数比较</a></li>
 <li><a href="#tf-idf">tf-idf</a></li>
 </ul>
 </li>
-<li><a href="#_6">协同过滤的应用</a><ul>
-<li><a href="#_7">召回</a></li>
-<li><a href="#_8">排序</a></li>
+<li><a href="#_5">协同过滤的应用</a><ul>
+<li><a href="#_6">召回</a></li>
+<li><a href="#_7">排序</a></li>
 </ul>
 </li>
 </ul>
@@ -57,19 +56,23 @@
 <h3 id="item-based-cf">item-based cf</h3>
 <p><img src="http://oa5sa0jqw.bkt.clouddn.com/9e33bec9b1b1c5bfdc72ef81355053c0.png" width = "350" height = "310" alt="item-based cf"/></p>
 <h2 id="_2">相似度计算</h2>
-<h3 id="_3">余弦相似度</h3>
-<h3 id="_4">皮尔逊系数</h3>
-<h3 id="_5">两种计算方式的比较</h3>
+<p>相似度的计算通常可以基于余弦相似度、皮尔逊系数、欧几里得距离等等。</p>
+<h3 id="_3">皮尔逊系数</h3>
+<p>皮尔逊系数是介于-1到1之间的值，用来描述两组线性的数据一同变化移动的趋势。线性正相关时值为1，无线性相关关系时值为0。计算公式[<a href="http://blog.csdn.net/wenbingoon/article/details/17414063">参考</a>]：
+$$
+r = \frac{cov(X,Y)}{\sigma_X\sigma_Y} = \frac{E[(X-\mu_X)(Y-\mu_Y)]}{\sigma_X\sigma_Y} = \frac{\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n (x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n (y_i-\bar{y})^2}}
+$$</p>
+<h3 id="_4">修正的余弦相似度与皮尔逊系数比较</h3>
 <h3 id="tf-idf">tf-idf</h3>
-<h2 id="_6">协同过滤的应用</h2>
-<h3 id="_7">召回</h3>
-<h3 id="_8">排序</h3>
+<h2 id="_5">协同过滤的应用</h2>
+<h3 id="_6">召回</h3>
+<h3 id="_7">排序</h3>
     </div>
     <div id="footer">
       <span>
         <p>Copyright © 2017 linxunchen.
         Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
-        <p>Site Generated 2017-01-04 23:35:10</p>
+        <p>Site Generated 2017-01-05 00:25:18</p>
       </span>
     </div>
   </body>
