@@ -63,7 +63,7 @@ $$
 r = \frac{cov(X,Y)}{\sigma_X\sigma_Y} = \frac{E[(X-\mu_X)(Y-\mu_Y)]}{\sigma_X\sigma_Y} = \frac{\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n (x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n (y_i-\bar{y})^2}}
 $$</p>
 <h3 id="_4">修正的余弦相似度与皮尔逊系数比较</h3>
-<p>两者差别在于去中心化的方式上：<br />
+<p>两者差别在于去中心化的方式上[<a href="https://www.zhihu.com/question/21824291">参考</a>]：<br />
 修正cosine相似度的目的是解决cosine相似度仅考虑向量维度方向上的相似而没考虑到各个维度的量纲的差异性，所以在计算相似度的时候，做了每个维度减去均值的修正操作。<br />
 Pearson correlation 相关系数主要考虑线性相关性，定义为两个变量之间的协方差和标准差的商，所以自然的考虑了均值的修正操作。  </p>
 <p>通常itemCF用改进余弦相似度，userCF用皮尔逊系数相似度，两者减去的均值都是每个用户的打分均值。</p>
@@ -76,7 +76,7 @@ Pearson correlation 相关系数主要考虑线性相关性，定义为两个变
       <span>
         <p>Copyright © 2017 linxunchen.
         Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
-        <p>Site Generated 2017-01-06 00:06:57</p>
+        <p>Site Generated 2017-01-06 00:08:19</p>
       </span>
     </div>
   </body>
