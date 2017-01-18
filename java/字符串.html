@@ -127,13 +127,17 @@ split的参数是String regex，也就是正则表达式，在正则里有特殊
 <span class="n">Splitter</span> <span class="n">niceCommaSplitter</span> <span class="o">=</span> <span class="n">Splitter</span><span class="o">.</span><span class="na">on</span><span class="o">(</span><span class="sc">&#39;,&#39;</span><span class="o">).</span><span class="na">omitEmptyString</span><span class="o">().</span><span class="na">trimResults</span><span class="o">();</span>  
 <span class="n">niceCommaSplitter</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">&quot;one,, two,  three&quot;</span><span class="o">);</span> <span class="c1">//&quot;one&quot;,&quot;two&quot;,&quot;three&quot;  </span>
 <span class="n">niceCommaSplitter</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">&quot;  four  ,  five  &quot;</span><span class="o">);</span> <span class="c1">//&quot;four&quot;,&quot;five&quot;</span>
+<span class="c1">// 根据字符串直接生成Map对象</span>
+<span class="n">String</span> <span class="n">mapStr</span> <span class="o">=</span> <span class="s">&quot;timeWeight:0.25;cateWeight:0.1;shopWeight:0.2&quot;</span><span class="o">;</span>
+<span class="n">Splitter</span><span class="o">.</span><span class="na">MapSplitter</span> <span class="n">splitter</span> <span class="o">=</span> <span class="n">Splitter</span><span class="o">.</span><span class="na">onPattern</span><span class="o">(</span><span class="s">&quot;\\s*;\\s*&quot;</span><span class="o">).</span><span class="na">withKeyValueSeparator</span><span class="o">(</span><span class="n">Splitter</span><span class="o">.</span><span class="na">onPattern</span><span class="o">(</span><span class="s">&quot;\\s*:\\s*&quot;</span><span class="o">));</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="n">splitter</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="n">mapStr</span><span class="o">);</span>
 </pre></div>
     </div>
     <div id="footer">
       <span>
         <p>Copyright © 2017 linxunchen.
         Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
-        <p>Site Generated 2017-01-08 23:58:01</p>
+        <p>Site Generated 2017-01-18 12:23:01</p>
       </span>
     </div>
   </body>
