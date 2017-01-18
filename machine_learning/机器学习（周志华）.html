@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
     <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
-    <title>less命令 - Wiki World</title>
+    <title>集成学习 - Wiki World</title>
     <meta name="keywords" content=""/>
     <meta name="description" content="linxunchen's wiki"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,31 +22,31 @@
     <div id="container">
       
 <div id="header">
-  <div class="post-nav"><a href="/wiki/">Home</a>&nbsp;&#187;&nbsp;<a href="/wiki/#tools">tools</a>&nbsp;&#187;&nbsp;less命令
+  <div class="post-nav"><a href="/wiki/">Home</a>&nbsp;&#187;&nbsp;<a href="/wiki/#machine_learning">machine_learning</a>&nbsp;&#187;&nbsp;集成学习
     <span class="updated">Updated&nbsp;
-      2016-12-19 00:23:10
+      2017-01-18 11:51:10
     </span></div>
 </div>
 <div class="clearfix"></div>
 
-<div class="page_title">less命令</div>
+<div class="page_title">集成学习</div>
 
   <div class="toc"><span class="toctitle">Table of Contents</span><ul>
-<li><a href="#_1">翻页</a></li>
-<li><a href="#_2">搜索</a></li>
+<li><a href="#_1">个体与集成</a></li>
+<li><a href="#boosting">Boosting</a></li>
 </ul>
 </div>
-<h2 id="_1">翻页</h2>
-<div class="hlcode"><pre>ctrl + B : 往前翻一屏
-ctrl + F : 往后翻一屏
-</pre></div>
-
-
-<h2 id="_2">搜索</h2>
-<div class="hlcode"><pre>/ : 向下搜索字符串
-n : 重复前一个搜索（与 / 或 ? 有关）
-N : 反向重复前一个搜索（与 / 或 ? 有关）
-</pre></div>
+<h2 id="_1">个体与集成</h2>
+<ul>
+<li>要获得好的集成，个体学习器应该“好而不同”。</li>
+</ul>
+<h2 id="boosting">Boosting</h2>
+<p>将弱学习器提升为强学习器的算法。串行生成基学习器，根据前一轮基学习器的表现来调整样本做下轮训练，使做错的样本受到更多关注。代表：AdaBoost。</p>
+<ul>
+<li>re-weighting和re-sampling均可，效果没有显著差别。</li>
+<li>re-weighting可能导致训练提前结束，re-sampling可以避免。因为使用re-weighting时每轮会检查错误率，如果错误率大于0.5则当前基学习器被抛弃，且学习过程停止。</li>
+<li>Boosting主要关注降低偏差，因此其能基于很弱的学习器构建出很强的集成。</li>
+</ul>
     </div>
     <div id="footer">
       <span>
