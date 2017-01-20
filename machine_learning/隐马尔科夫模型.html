@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>隐马尔科夫模型 - Wiki World</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="linxunchen's wiki"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/wiki/">Home</a>&nbsp;&#187;&nbsp;<a href="/wiki/#machine_learning">machine_learning</a>&nbsp;&#187;&nbsp;隐马尔科夫模型
+    <span class="updated">Updated&nbsp;
+      2017-01-20 10:37:10
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">隐马尔科夫模型</div>
+
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">通信模型</a></li>
+<li><a href="#_2">马尔科夫链</a></li>
+</ul>
+</div>
+<h2 id="_1">通信模型</h2>
+<p>信息源发出的信号是$s_1,s_2,s_3,...$，接收器接收到的信号是$o_1,o_2,o_3,...$，需要根据收到的信号来还原发送的信号。</p>
+<p>用概率论语言描述：
+$$
+s_1,s_2,s_3,... = Arg_{s_1,s_2,s_3,...} Max P(s_1,s_2,s_3,...|o_1,o_2,o_3,...)
+$$</p>
+<p>利用贝叶斯公式把上述公式变换成：
+$$
+\frac{p(o_1,o_2,o_3,...|s_1,s_2,s_3,...)\cdot p(s_1,s_2,s_3,...)}{p(o_1,o_2,o_3,...)}
+$$</p>
+<p>首先，我们是要选择出最佳的$s_t$序列变量，$o_t$序列信息一旦产生就不会改变，因此 $p(o_1,o_2,o_3,...)$ 是可以忽略的常数。上述公式等价成：
+$$
+p(o_1,o_2,o_3,...|s_1,s_2,s_3,...)\cdot p(s_1,s_2,s_3,...)
+$$
+上述公式可以用隐马尔科夫模型模型来估计。</p>
+<h2 id="_2">马尔科夫链</h2>
+<p>为了简化随机变量的时间序列问题，提出的一种简化假设，即随机过程中各个状态$s_t$的概率分布，只与它的前一个状态$s_{t-1}$有关，即$P(s_t|s_1,s_2,s_3,...,s_{t-1})$</p>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2017 linxunchen.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2017-01-20 12:06:43</p>
+      </span>
+    </div>
+  </body>
+</html>
