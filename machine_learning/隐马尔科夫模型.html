@@ -35,6 +35,16 @@
 <li><a href="#_1">通信模型</a></li>
 <li><a href="#_2">马尔科夫链</a></li>
 <li><a href="#_3">隐马尔可夫模型</a></li>
+<li><a href="#_4">隐马尔可夫模型的训练</a><ul>
+<li><a href="#_5">监督学习的方法</a></li>
+<li><a href="#_6">非监督学习的方法</a></li>
+</ul>
+</li>
+<li><a href="#_7">马尔科夫链的思想在推荐中的应用</a><ul>
+<li><a href="#_8">召回</a></li>
+<li><a href="#_9">排序</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <h2 id="_1">通信模型</h2>
@@ -73,12 +83,32 @@ p(s_1,s_2,s_3,...,o_1,o_2,o_3,...) = \prod_{t} P(s_t|s_{t-1}) \cdot P(o_t|s_t)
 $$</p>
 <p>找到上式的最大值，即找到了要识别的信息$s_1,s_2,s_3,...$。</p>
 <p>在利用隐马尔科夫模型解决实际问题时，需要知道转移概率$P(s_t|s_{t-1})$和生成概率$P(o_t|s_t)$，它们被称为隐马尔科夫模型的参数。</p>
+<h2 id="_4">隐马尔可夫模型的训练</h2>
+<h3 id="_5">监督学习的方法</h3>
+<p>基于人工标注的数据，进行频次的计算：
+$$
+P(o_t|s_t) = \frac{#(o_t,s_t)}{#(s_t)}
+$$
+$$
+P(s_t|s_{t-1}) = \frac{#(s_t,s_{t-1})}{#(s_{t-1})}
+$$</p>
+<h3 id="_6">非监督学习的方法</h3>
+<p>鲍姆-韦尔奇算法</p>
+<h2 id="_7">马尔科夫链的思想在推荐中的应用</h2>
+<h3 id="_8">召回</h3>
+<p>在“买了手机的人接下来会买贴膜”这种推荐场景中很好用，场景具备较强的时序特征。</p>
+<p>假设用户喜欢A物品，需要在{B,C,D}这个候选集中选择性召回，那么我们可以分别计算$P(s_B|s_A)$，$P(s_C|s_A)$，$P(s_D|s_A)$，对这三个概率进行排序和截断，生成召回集。</p>
+<h3 id="_9">排序</h3>
+<p>将转移概率作为排序模型中的特征，参与计算。</p>
+<p>参考：</p>
+<div class="hlcode"><pre><span class="err">数学之美第</span><span class="mi">5</span><span class="err">章</span>
+</pre></div>
     </div>
     <div id="footer">
       <span>
         <p>Copyright © 2017 linxunchen.
         Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
-        <p>Site Generated 2017-01-22 15:05:48</p>
+        <p>Site Generated 2017-01-22 15:51:45</p>
       </span>
     </div>
   </body>
