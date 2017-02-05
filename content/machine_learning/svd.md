@@ -32,7 +32,7 @@ $$
 ### 奇异值分解的定义
 
 任一矩阵A都可以分解为
-$$A_{m*n}=U_{m*m}\Sigma_{m*n}{V^T}_{n*n}$$
+$$A_{m * n}=U_{m * m}\Sigma_{m * n}{V^T}_{n * n}$$
 
 U里面的向量是正交的，称为左奇异向量。V里面的向量也是正交的，称为右奇异向量。
 $\Sigma$除了对角线的元素都是0，对角线上的元素称为奇异值。
@@ -53,15 +53,16 @@ U的列是$AA^T$的特征向量，V的列是$A^TA$的特征向量，奇异值的
 参考[PCA的数学原理](http://blog.codinglabs.org/articles/pca-tutorial.html)，有详细的分析。
 
 注意的点：
+
 - 分解$X^TX$或者$XX^T$（协方差矩阵）都可以求解PCA，前者从V矩阵里获取投影矩阵，后者从U矩阵里获取投影矩阵（[参考](https://www.zhihu.com/question/39234760)）
 - 对于对称方阵，其特征值分解和奇异值分解是一样的
 
 ### 直观理解
 $$
-A_{m*n} \approx U_{m*r}\Sigma_{r*r}{V^T}_{r*n}
+A_{m  *  n} \approx U_{m * r}\Sigma_{r * r}{V^T}_{r * n}
 $$
 由于V是正交矩阵，则
 $$
-A_{m*n} V_{n*r} \approx U_{m*r}\Sigma_{r*r}
+A_{m * n} V_{n * r} \approx U_{m * r}\Sigma_{r * r}
 $$
 右边的矩阵即达到了对A矩阵列降维的目的。
