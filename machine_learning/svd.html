@@ -75,7 +75,7 @@ $$
 <p>特征值分解是一个提取矩阵特征很不错的方法，但是它只适用于方阵，奇异值分解则是一个能适用于任意的矩阵的一种分解的方法。</p>
 <h3 id="_5">奇异值分解的定义</h3>
 <p>任一矩阵A都可以分解为
-$$A_{m<em>n}=U_{m</em>m}\Sigma_{m<em>n}{V^T}_{n</em>n}$$</p>
+$$A_{m * n}=U_{m * m}\Sigma_{m * n}{V^T}_{n * n}$$</p>
 <p>U里面的向量是正交的，称为左奇异向量。V里面的向量也是正交的，称为右奇异向量。
 $\Sigma$除了对角线的元素都是0，对角线上的元素称为奇异值。</p>
 <h3 id="_6">奇异值分解和特征值分解的对应关系</h3>
@@ -87,16 +87,18 @@ $\Sigma$除了对角线的元素都是0，对角线上的元素称为奇异值�
 <h2 id="pca">PCA算法</h2>
 <h3 id="_8">理论分析</h3>
 <p>参考<a href="http://blog.codinglabs.org/articles/pca-tutorial.html">PCA的数学原理</a>，有详细的分析。</p>
-<p>注意的点：
-- 分解$X^TX$或者$XX^T$（协方差矩阵）都可以求解PCA，前者从V矩阵里获取投影矩阵，后者从U矩阵里获取投影矩阵（<a href="https://www.zhihu.com/question/39234760">参考</a>）
-- 对于对称方阵，其特征值分解和奇异值分解是一样的</p>
+<p>注意的点：</p>
+<ul>
+<li>分解$X^TX$或者$XX^T$（协方差矩阵）都可以求解PCA，前者从V矩阵里获取投影矩阵，后者从U矩阵里获取投影矩阵（<a href="https://www.zhihu.com/question/39234760">参考</a>）</li>
+<li>对于对称方阵，其特征值分解和奇异值分解是一样的</li>
+</ul>
 <h3 id="_9">直观理解</h3>
 <p>$$
-A_{m<em>n} \approx U_{m</em>r}\Sigma_{r<em>r}{V^T}_{r</em>n}
+A_{m  *  n} \approx U_{m * r}\Sigma_{r * r}{V^T}<em _="*" m="m" n="n">{r * n}
 $$
 由于V是正交矩阵，则
 $$
-A_{m<em>n} V_{n</em>r} \approx U_{m<em>r}\Sigma_{r</em>r}
+A</em> V_{n * r} \approx U_{m * r}\Sigma_{r * r}
 $$
 右边的矩阵即达到了对A矩阵列降维的目的。</p>
     </div>
@@ -104,7 +106,7 @@ $$
       <span>
         <p>Copyright © 2017 linxunchen.
         Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
-        <p>Site Generated 2017-02-05 14:05:12</p>
+        <p>Site Generated 2017-02-05 14:08:18</p>
       </span>
     </div>
   </body>
