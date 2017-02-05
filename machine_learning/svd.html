@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>奇异值分解的应用 - Wiki World</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="linxunchen's wiki"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/wiki/">Home</a>&nbsp;&#187;&nbsp;<a href="/wiki/#machine_learning">machine_learning</a>&nbsp;&#187;&nbsp;奇异值分解的应用
+    <span class="updated">Updated&nbsp;
+      2017-02-02 10:37:10
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">奇异值分解的应用</div>
+
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">特征值分解</a><ul>
+<li><a href="#_2">特征值与特征向量</a></li>
+<li><a href="#_3">特征值分解的定义</a></li>
+</ul>
+</li>
+<li><a href="#_4">奇异值分解</a><ul>
+<li><a href="#_5">奇异值分解的定义</a></li>
+<li><a href="#_6">奇异值分解和特征值分解的对应关系</a></li>
+<li><a href="#_7">矩阵压缩</a></li>
+</ul>
+</li>
+<li><a href="#pca">PCA算法</a><ul>
+<li><a href="#_8">理论分析</a></li>
+<li><a href="#_9">直观理解</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="_1">特征值分解</h2>
+<p>奇异值分解和特征值分解有紧密的联系，特征值分解和奇异值分解的目的都是一样，就是提取出一个矩阵最重要的特征。</p>
+<h3 id="_2">特征值与特征向量</h3>
+<ul>
+<li>定义</li>
+</ul>
+<p>如果说一个向量v是方阵A的特征向量，将一定可以表示成下面的形式：
+$$
+Av = \lambda v
+$$
+这时候λ就被称为特征向量v对应的特征值，一个矩阵的一组特征向量是一组正交向量。特征向量必须是非零向量，且必是列向量。</p>
+<ul>
+<li>含义<ul>
+<li>特征向量的代数上含义是：将矩阵乘法转换为数乘操作。</li>
+<li>特征向量的几何含义是：特征向量通过方阵A变换只进行伸缩，而保持特征向量的方向不变。</li>
+<li>特征值表示的是这个特征到底有多重要，类似于权重，而特征向量在几何上就是一个点，从原点到该点的方向表示向量的方向。</li>
+</ul>
+</li>
+</ul>
+<h3 id="_3">特征值分解的定义</h3>
+<p><img alt="特征值分解" src="http://oa5sa0jqw.bkt.clouddn.com/c2e4911a29158770ea870f6e98eb2304.png" /></p>
+<h2 id="_4">奇异值分解</h2>
+<p>特征值分解是一个提取矩阵特征很不错的方法，但是它只适用于方阵，奇异值分解则是一个能适用于任意的矩阵的一种分解的方法。</p>
+<h3 id="_5">奇异值分解的定义</h3>
+<p>任一矩阵A都可以分解为
+$$A_{m<em>n}=U_{m</em>m}\Sigma_{m<em>n}{V^T}_{n</em>n}$$</p>
+<p>U里面的向量是正交的，称为左奇异向量。V里面的向量也是正交的，称为右奇异向量。
+$\Sigma$除了对角线的元素都是0，对角线上的元素称为奇异值。</p>
+<h3 id="_6">奇异值分解和特征值分解的对应关系</h3>
+<p>U的列是$AA^T$的特征向量，V的列是$A^TA$的特征向量，奇异值的平方是特征值。</p>
+<p><img alt="svd和特征值分解的关系" src="http://oa5sa0jqw.bkt.clouddn.com/05b644b2ba9a4715518b9a07ce2ad9c0.png" /></p>
+<h3 id="_7">矩阵压缩</h3>
+<p><img alt="矩阵压缩" src="http://oa5sa0jqw.bkt.clouddn.com/eb41401bef80f57aebd6049dd1a6a619.png" /></p>
+<p>右边的三个矩阵相乘的结果将会是一个接近于A的矩阵，在这儿，r越接近于n，则相乘的结果越接近于A。而这三个矩阵的面积之和（在存储观点来说，矩阵面积越小，存储量就越小）要远远小于原始的矩阵A，我们如果想要压缩空间来表示原矩阵A，我们存下这里的三个矩阵：U、Σ、V就好了。</p>
+<h2 id="pca">PCA算法</h2>
+<h3 id="_8">理论分析</h3>
+<p>参考<a href="http://blog.codinglabs.org/articles/pca-tutorial.html">PCA的数学原理</a>，有详细的分析。</p>
+<p>注意的点：
+- 分解$X^TX$或者$XX^T$（协方差矩阵）都可以求解PCA，前者从V矩阵里获取投影矩阵，后者从U矩阵里获取投影矩阵（<a href="https://www.zhihu.com/question/39234760">参考</a>）
+- 对于对称方阵，其特征值分解和奇异值分解是一样的</p>
+<h3 id="_9">直观理解</h3>
+<p>$$
+A_{m<em>n} \approx U_{m</em>r}\Sigma_{r<em>r}{V^T}_{r</em>n}
+$$
+由于V是正交矩阵，则
+$$
+A_{m<em>n} V_{n</em>r} \approx U_{m<em>r}\Sigma_{r</em>r}
+$$
+右边的矩阵即达到了对A矩阵列降维的目的。</p>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2017 linxunchen.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2017-02-05 14:05:12</p>
+      </span>
+    </div>
+  </body>
+</html>

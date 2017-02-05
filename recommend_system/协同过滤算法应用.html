@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>协同过滤算法应用 - Wiki World</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="linxunchen's wiki"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/wiki/">Home</a>&nbsp;&#187;&nbsp;<a href="/wiki/#recommend_system">recommend_system</a>&nbsp;&#187;&nbsp;协同过滤算法应用
+    <span class="updated">Updated&nbsp;
+      2017-01-04 22:40:10
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">协同过滤算法应用</div>
+
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">经典的基于行为的协同过滤算法</a><ul>
+<li><a href="#user-based-cf">user-based cf</a></li>
+<li><a href="#item-based-cf">item-based cf</a></li>
+</ul>
+</li>
+<li><a href="#_2">相似度计算</a><ul>
+<li><a href="#_3">皮尔逊系数</a></li>
+<li><a href="#_4">修正的余弦相似度与皮尔逊系数比较</a></li>
+<li><a href="#_5">热门降权</a></li>
+</ul>
+</li>
+<li><a href="#_6">协同过滤的应用</a><ul>
+<li><a href="#_7">召回</a></li>
+<li><a href="#_8">排序</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="_1">经典的基于行为的协同过滤算法</h2>
+<h3 id="user-based-cf">user-based cf</h3>
+<p><img src="http://oa5sa0jqw.bkt.clouddn.com/9ca075f9e66cb7e86b3434b4f8d69161.png" width = "350" height = "310" alt="user-based cf"/></p>
+<h3 id="item-based-cf">item-based cf</h3>
+<p><img src="http://oa5sa0jqw.bkt.clouddn.com/9e33bec9b1b1c5bfdc72ef81355053c0.png" width = "350" height = "310" alt="item-based cf"/></p>
+<h2 id="_2">相似度计算</h2>
+<p>相似度的计算通常可以基于余弦相似度、皮尔逊系数、欧几里得距离等等。</p>
+<h3 id="_3">皮尔逊系数</h3>
+<p>皮尔逊系数是介于-1到1之间的值，用来描述两组线性的数据一同变化移动的趋势。线性正相关时值为1，无线性相关关系时值为0。计算公式[<a href="http://blog.csdn.net/wenbingoon/article/details/17414063">参考</a>]：
+$$
+r = \frac{cov(X,Y)}{\sigma_X\sigma_Y} = \frac{E[(X-\mu_X)(Y-\mu_Y)]}{\sigma_X\sigma_Y} = \frac{\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n (x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n (y_i-\bar{y})^2}}
+$$</p>
+<h3 id="_4">修正的余弦相似度与皮尔逊系数比较</h3>
+<p>两者差别在于去中心化的方式上[<a href="https://www.zhihu.com/question/21824291">参考</a>]：  </p>
+<p>修正cosine相似度的目的是解决cosine相似度仅考虑向量维度方向上的相似而没考虑到各个维度的量纲的差异性，所以在计算相似度的时候，做了每个维度减去均值的修正操作。本文最上面中itemCF即是用的修正余弦相似度。</p>
+<p>Pearson correlation 相关系数主要考虑线性相关性，定义为两个变量之间的协方差和标准差的商，所以自然的考虑了均值的修正操作。  </p>
+<p>通常itemCF用修正的余弦相似度，userCF用皮尔逊系数相似度，两者减去的均值都是每个用户的打分均值。</p>
+<h3 id="_5">热门降权</h3>
+<p>以userCF为例，两个用户对冷门物品采取过同样的行为更能说明他们兴趣的相似度，因此在计算相似度的时候，对分子中热门物品的贡献进行降权，是一种有效的优化策略。</p>
+<p>可以对分子中每项乘以
+$\frac{1}{\log1+|N(i)|}$，
+其中
+$|N(i)|$
+表征了物品的热门程度。降权也可以在UI行为分计算的时候进行，效果等价。</p>
+<h2 id="_6">协同过滤的应用</h2>
+<h3 id="_7">召回</h3>
+<p>协同过滤算法目前主要应用在召回模块中，通常应用场景有：</p>
+<ul>
+<li>为用户离线或在线产出推荐物品列表，推荐容器在线加载。</li>
+<li>产出物品相似度表，当用户实时点击/点赞物品时，可以将其相似的物品进行召回。在最近的实验中发现效果很赞。</li>
+<li>协同召回除了基于行为，还可以基于其他维度进行协同关系的计算。比如，可以通过“用户-圈子”分数来计算用户的相似度，通过“文章-职业”分数来计算文章相似度等等。</li>
+</ul>
+<h3 id="_8">排序</h3>
+<p>协同过滤算法并不是很精细的算法，一般很少直接用于排序。目前了解到的，可将协同算法计算出的UI分数，作为排序模型的特征来使用，有一定的效果。</p>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2017 linxunchen.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2017-02-05 14:05:12</p>
+      </span>
+    </div>
+  </body>
+</html>

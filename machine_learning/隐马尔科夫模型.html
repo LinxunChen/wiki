@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>隐马尔科夫模型 - Wiki World</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="linxunchen's wiki"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/wiki/">Home</a>&nbsp;&#187;&nbsp;<a href="/wiki/#machine_learning">machine_learning</a>&nbsp;&#187;&nbsp;隐马尔科夫模型
+    <span class="updated">Updated&nbsp;
+      2017-01-20 10:37:10
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">隐马尔科夫模型</div>
+
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">通信模型</a></li>
+<li><a href="#_2">马尔科夫链</a></li>
+<li><a href="#_3">隐马尔可夫模型</a></li>
+<li><a href="#_4">隐马尔可夫模型的训练</a><ul>
+<li><a href="#_5">监督学习的方法</a></li>
+<li><a href="#_6">非监督学习的方法</a></li>
+</ul>
+</li>
+<li><a href="#_7">马尔科夫链思想在推荐中的应用</a><ul>
+<li><a href="#_8">召回</a></li>
+<li><a href="#_9">排序</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="_1">通信模型</h2>
+<p>需要解决的问题：信息源发出的信号是$s_1,s_2,s_3,...$，接收器接收到的信号是$o_1,o_2,o_3,...$，需要根据收到的信号来还原发送的信号。</p>
+<p>用概率论语言描述：
+$$
+s_1,s_2,s_3,... = Arg_{s_1,s_2,s_3,...} Max P(s_1,s_2,s_3,...|o_1,o_2,o_3,...)
+$$</p>
+<p>利用贝叶斯公式把上述公式变换成：
+$$
+Arg_{s_1,s_2,s_3,...} Max\frac{p(o_1,o_2,o_3,...|s_1,s_2,s_3,...)\cdot p(s_1,s_2,s_3,...)}{p(o_1,o_2,o_3,...)}
+$$</p>
+<p>首先，我们是要选择出最佳的$s_t$序列变量，$o_t$序列信息一旦产生就不会改变，因此 $p(o_1,o_2,o_3,...)$ 是可以忽略的常数。上述公式等价成：
+$$
+p(o_1,o_2,o_3,...|s_1,s_2,s_3,...)\cdot p(s_1,s_2,s_3,...)
+$$
+上述公式可以用隐马尔科夫模型模型来估计。</p>
+<h2 id="_2">马尔科夫链</h2>
+<p>为了简化随机变量的时间序列问题，提出的一种简化假设，即随机过程中各个状态$s_t$的概率分布，只与它的前一个状态$s_{t-1}$有关，即$P(s_t|s_1,s_2,s_3,...,s_{t-1}) = P(s_t|s_{t-1})$</p>
+<p><img alt="马尔科夫链" src="http://oa5sa0jqw.bkt.clouddn.com/75099ddd4e7240655155691d5ce0c659.png" /></p>
+<p>从$m_1$搭配$m_2$的转移概率为1.0，$m_2$到$m_3$有60%的转移概率，$m_2$到$m_4$有40%的转移概率。</p>
+<p>把这个马尔科夫链想象成一台机器，随机选择一个状态作为初始状态，按照上述规则选择后续状态，运行一段时间T之后，会产生一个状态序列：$s_1,s_2,s_3,...s_T$。从这个序列中，可以根据某个状态$m_i$的出现次数#($m_i$)，以及从$m_i$转移到$m_j$的次数#($m_i$, $m_j$)，来估计出$m_i$到$m_j$的转移概率#($m_i$, $m_j$)/#($m_i$)。</p>
+<h2 id="_3">隐马尔可夫模型</h2>
+<p>隐马尔科夫模型是在马尔科夫链上的一个扩展，其做了一个独立输出假设：隐马尔科夫模型在每个时刻t会输出一个$o_t$，而且$o_t$和$s_t$相关且仅和$s_t$相关。</p>
+<p>根据该假设，可知下式：
+$$
+p(o_1,o_2,o_3,...|s_1,s_2,s_3,...) = \prod_{t} P(o_t|s_t)
+$$
+再结合马尔科夫链的性质：
+$$
+P(s_1,s_2,s_3,...) = \prod_{t} P(s_t|s_{t-1})
+$$
+将其代入通信模型小节里最后的式子中，即可计算出某个特定状态序列$s_1,s_2,s_3,...$产出符号$o_1,o_2,o_3,...$的概率：
+$$
+p(s_1,s_2,s_3,...,o_1,o_2,o_3,...) = \prod_{t} P(s_t|s_{t-1}) \cdot P(o_t|s_t)
+$$</p>
+<p>找到上式的最大值，即找到了要识别的信息$s_1,s_2,s_3,...$。</p>
+<p>在利用隐马尔科夫模型解决实际问题时，需要知道转移概率$P(s_t|s_{t-1})$和生成概率$P(o_t|s_t)$，它们被称为隐马尔科夫模型的参数。</p>
+<h2 id="_4">隐马尔可夫模型的训练</h2>
+<h3 id="_5">监督学习的方法</h3>
+<p>基于人工标注的数据，进行频次的计算：
+$$
+P(o_t|s_t) = \frac{\#(o_t,s_t)}{\#(s_t)}
+$$
+$$
+P(s_t|s_{t-1}) = \frac{\#(s_t,s_{t-1})}{\#(s_{t-1})}
+$$</p>
+<h3 id="_6">非监督学习的方法</h3>
+<p>鲍姆-韦尔奇算法</p>
+<h2 id="_7">马尔科夫链思想在推荐中的应用</h2>
+<h3 id="_8">召回</h3>
+<p>在“买了手机的人接下来会买贴膜”这种推荐场景中很好用，场景具备较强的时序特征。</p>
+<p>假设用户喜欢A物品，需要在{B,C,D}这个候选集中选择性召回，那么我们可以分别计算$P(s_B|s_A)$，$P(s_C|s_A)$，$P(s_D|s_A)$，对这三个概率进行排序和截断，生成召回集。</p>
+<h3 id="_9">排序</h3>
+<p>将转移概率作为排序模型中的特征，参与计算。</p>
+<div class="hlcode"><pre><span class="err">参考：</span>
+<span class="err">数学之美第</span><span class="mi">5</span><span class="err">章</span>
+</pre></div>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2017 linxunchen.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2017-02-05 14:05:12</p>
+      </span>
+    </div>
+  </body>
+</html>
