@@ -1,5 +1,5 @@
 ---
-title: pandas
+title: Pandas
 date: 2017-02-19 10:37:10
 ---
 [TOC]
