@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>pandas - Wiki World</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="linxunchen's wiki"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+
+  <body>
+    <div id="container">
+      
+<div id="header">
+  <div class="post-nav"><a href="/wiki/">Home</a>&nbsp;&#187;&nbsp;<a href="/wiki/#python">python</a>&nbsp;&#187;&nbsp;pandas
+    <span class="updated">Updated&nbsp;
+      2017-02-19 10:37:10
+    </span></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="page_title">pandas</div>
+
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">文本读取</a></li>
+<li><a href="#_2">创建对象</a></li>
+<li><a href="#_3">查看数据</a><ul>
+<li><a href="#_4">查看概况</a></li>
+</ul>
+</li>
+<li><a href="#_5">排序</a><ul>
+<li><a href="#_6">按列值排序</a></li>
+<li><a href="#_7">按轴排序</a></li>
+</ul>
+</li>
+<li><a href="#_8">选择</a><ul>
+<li><a href="#_9">简单粗暴</a></li>
+<li><a href="#_10">使用标签选取</a></li>
+<li><a href="#_11">使用位置选取</a></li>
+<li><a href="#_12">使用布尔值选取</a></li>
+</ul>
+</li>
+<li><a href="#_13">基本运算</a><ul>
+<li><a href="#_14">转置</a></li>
+<li><a href="#_15">统计计算</a></li>
+<li><a href="#_16">基于一列产生新的一列</a></li>
+</ul>
+</li>
+<li><a href="#_17">缺失处理</a></li>
+<li><a href="#_18">其他</a><ul>
+<li><a href="#_19">类型转换</a></li>
+<li><a href="#_20">字符串转时间对象</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+</pre></div>
+
+
+<h2 id="_1">文本读取</h2>
+<p>读csv文件用<code>pd.read_csv</code>（默认分隔符为逗号），读txt用<code>pd.read_table</code>（默认分隔符为tab符），例：</p>
+<div class="hlcode"><pre><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s">&#39;%path%&#39;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;shop&#39;</span><span class="p">,</span><span class="s">&#39;dt&#39;</span><span class="p">,</span><span class="s">&#39;week&#39;</span><span class="p">,</span><span class="s">&#39;holiday&#39;</span><span class="p">,</span><span class="s">&#39;pay&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;dt&#39;</span><span class="p">:</span><span class="s">&#39;str&#39;</span><span class="p">})</span>
+</pre></div>
+
+
+<p>参考文档：<a href="http://freefarm.cc/2016/05/23/PANDAS%E5%B8%B8%E7%94%A8%E6%89%8B%E5%86%8C-I-%E8%AF%BB%E5%86%99%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE/">pandas读写文本数据</a></p>
+<h2 id="_2">创建对象</h2>
+<p><img alt="pandas数据结构" src="http://oa5sa0jqw.bkt.clouddn.com/3d18ec345d080d3aed6532a1742045d0.png" /></p>
+<h2 id="_3">查看数据</h2>
+<h3 id="_4">查看概况</h3>
+<div class="hlcode"><pre><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="err">前</span><span class="mi">5</span><span class="err">个</span>
+<span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="err">后</span><span class="mi">5</span><span class="err">个</span>
+<span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>  <span class="err">注：非数字和</span><span class="n">null</span><span class="err">的看不到；</span><span class="mi">25</span><span class="o">%</span><span class="err">、</span><span class="mi">75</span><span class="o">%</span><span class="err">那个是百分位数</span>
+<span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;holiday&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span> <span class="err">看某特征有哪些取值</span>
+</pre></div>
+
+
+<h2 id="_5">排序</h2>
+<h3 id="_6">按列值排序</h3>
+<div class="hlcode"><pre><span class="c"># 先按shop升序排序，再按dt来，ascending默认是True</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sort</span><span class="p">([</span><span class="s">&#39;shop&#39;</span><span class="p">,</span><span class="s">&#39;dt&#39;</span><span class="p">])</span>
+</pre></div>
+
+
+<h3 id="_7">按轴排序</h3>
+<div class="hlcode"><pre><span class="c"># 按列名排序，如果axis=0则按照rowID进行排序</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+
+
+<h2 id="_8">选择</h2>
+<h3 id="_9">简单粗暴</h3>
+<ul>
+<li>列选择</li>
+</ul>
+<div class="hlcode"><pre><span class="c"># 选择一个单独的列</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;shop&#39;</span><span class="p">]</span>
+<span class="c"># 选择多个列</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s">&quot;shop&quot;</span><span class="p">,</span> <span class="s">&quot;dt&quot;</span><span class="p">]]</span>
+</pre></div>
+
+
+<ul>
+<li>行选择</li>
+</ul>
+<div class="hlcode"><pre><span class="c"># 选择前三列，和多列选择一定要注意区分</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="c"># rowid按时间选择</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;20160102&#39;</span><span class="p">:</span><span class="s">&#39;20160109&#39;</span><span class="p">]</span>
+</pre></div>
+
+
+<h3 id="_10">使用标签选取</h3>
+<div class="hlcode"><pre><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="err">行标签</span><span class="p">,</span><span class="err">列标签</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="c">#选取ab两行数据</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s">&#39;one&#39;</span><span class="p">]</span> <span class="c">#选取one列的数据</span>
+</pre></div>
+
+
+<p>df.loc的第一个参数是行标签，第二个参数为列标签（可选参数，默认为所有列标签），两个参数既可以是列表也可以是单个字符，如果两个参数都为列表则返回的是DataFrame，否则，则为Series。</p>
+<h3 id="_11">使用位置选取</h3>
+<div class="hlcode"><pre><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="err">行位置</span><span class="p">,</span><span class="err">列位置</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="c">#选取第二行，第二列的值，返回的为单个值</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">],:]</span><span class="c">#选取第一行及第三行的数据</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,:]</span><span class="c">#选取第一行到第三行（不包含）的数据</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="c">#选取所有记录的第一列的值，返回的为一个Series</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="c">#选取第一行数据，返回的为一个Series</span>
+</pre></div>
+
+
+<p>更广义的是使用df.ix，自动判断使用位置还是标签进行切片</p>
+<h3 id="_12">使用布尔值选取</h3>
+<div class="hlcode"><pre><span class="n">df</span><span class="p">[</span><span class="err">逻辑条件</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">one</span><span class="o">&gt;=</span><span class="mi">2</span><span class="p">]</span><span class="c">#单个逻辑条件</span>
+<span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="o">.</span><span class="n">one</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">one</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">)]</span><span class="c">#多个逻辑条件组合</span>
+</pre></div>
+
+
+<p>这种方式获得的数据切片都是DataFrame。</p>
+<h2 id="_13">基本运算</h2>
+<h3 id="_14">转置</h3>
+<div class="hlcode"><pre><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+
+
+<h3 id="_15">统计计算</h3>
+<div class="hlcode"><pre><span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="c">#计算列的平均值，参数为轴，可选值为0或1（即mean(1)）.默认为0，即按照列运算</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="c">#计算每行的和</span>
+</pre></div>
+
+
+<h3 id="_16">基于一列产生新的一列</h3>
+<div class="hlcode"><pre><span class="c"># 每一个元素都处理</span>
+<span class="n">titanic</span><span class="p">[</span><span class="s">&quot;NameLength&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="s">&quot;Name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="c"># 每一个元素都处理，调用函数</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="n">titles</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="s">&quot;Name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_title</span><span class="p">)</span>  
+<span class="c"># A function to get the title from a name.</span>
+<span class="k">def</span> <span class="nf">get_title</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="c"># Use a regular expression to search for a title.  Titles always consist of capital and lowercase letters, and end with a period.</span>
+    <span class="n">title_search</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39; ([A-Za-z]+)\.&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="c"># If the title exists, extract and return it.</span>
+    <span class="k">if</span> <span class="n">title_search</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">title_search</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">&quot;&quot;</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="c"># 每一行都处理，一行一行的调用函数</span>
+<span class="n">family_ids</span> <span class="o">=</span> <span class="n">titanic</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_family_id</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c"># A function to get the id given a row</span>
+<span class="k">def</span> <span class="nf">get_family_id</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="c"># Find the last name by splitting on a comma</span>
+    <span class="n">last_name</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">&quot;Name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="o">...</span>
+</pre></div>
+
+
+<h2 id="_17">缺失处理</h2>
+<div class="hlcode"><pre><span class="c"># 缺失值填充</span>
+<span class="n">titanic</span><span class="p">[</span><span class="s">&#39;Age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="s">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+<span class="c"># 去掉缺失值的行</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s">&#39;any&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<h2 id="_18">其他</h2>
+<h3 id="_19">类型转换</h3>
+<div class="hlcode"><pre><span class="c"># 将第一列全部转换为string类型</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+</pre></div>
+
+
+<h3 id="_20">字符串转时间对象</h3>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="n">x</span> <span class="o">=</span> <span class="s">&#39;20160102&#39;</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]),</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">]),</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">:]))</span>
+</pre></div>
+    </div>
+    <div id="footer">
+      <span>
+        <p>Copyright © 2017 linxunchen.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2017-02-19 11:56:01</p>
+      </span>
+    </div>
+  </body>
+</html>
